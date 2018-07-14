@@ -1,68 +1,35 @@
-package atal;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class URI_1905_POLICIA_E_LADRAO {
+	public Map<Integer, String> entrada;
 	
-	public static boolean flag = false;
-    public static Scanner input;
-    public static int[][] coordinates = new int[][]{{1,0},{0,1},{-1,0},{0,-1}};
+	public static void main(String[] args) {
+			int[] array1 = {1,3,4,6,7};
+			int[] array2 = {2,5,1,3,5,7};
+			int toFind = 2;
+			int result = find(array1,array2,toFind);
+			System.out.println(result);
+			
+		}
 
-    public static void main(String[] args) {
-        input = new Scanner(System.in);
-        int qtd_teste = Integer.parseInt(input.nextLine());
-        input.nextLine();
-
-        for(int i = 0 ; i < qtd_teste; i++) {
-            input.nextLine();
-
-            String[][] matriz = createMaze();
-
-            flag = false;
-
-            dfs(matriz, new int[]{0,0});
-
-            if(flag) {
-                System.out.println("COPS");
-            } else {
-                System.out.println("ROBBERS");
-            }
-        }
-    }
-
-    public static String[][] createMaze() {
-        String[][] maze = new String[5][5];
-
-        for(int i = 0; i < 5; i++) {
-            maze[i] = input.nextLine().split(" ");
-        }
-
-        return maze;
-    }
-
-    public static void dfs(String[][] matriz, int[] cords) {
-        if(!(cords[0] >= 0 && cords[0] < 5 && cords[1] >= 0 && cords[1] < 5)) {
-            return;
-        }
-
-        if(cords[0] == 4 && cords[1]==4){
-            flag = true;
-            return;
-        }
-
-        String elementAt = matriz[cords[1]][cords[0]];
-        
-        if(elementAt.equals("1") || elementAt.equals("x")){
-            return;
-        }
-
-        matriz[cords[1]][cords[0]] =  "x";
-
-        for (int[] canidades : coordinates) {
-            if(flag) {
-                break;
-            }
-            dfs(matriz, new int[]{cords[0] +canidades[0] , cords[1]+canidades[1]});
-        }
-    }
+	private static int find(int[] array1, int[] array2, int toFind) {
+		if(array1.length == 0) {
+			return array2[toFind];
+		}
+		if(array2.length == 0) {
+			return array2[toFind];
+		}
+		int mid1 = array1.length/2;
+		int mid2 = array2.length/2;
+		
+		if((mid1 + mid2) < toFind) {
+			if(array1[mid1] > array2[mid2]) {
+				return find(array1[mid1],array2,toFind);
+			}
+		}
+		
+	}
 }
+
